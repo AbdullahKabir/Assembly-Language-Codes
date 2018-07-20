@@ -1,0 +1,182 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG1 DB "GIVE INPUT 1: $"
+MSG2 DB "GIVE INPUT 2: $"
+MSG3 DB "GIVE INPUT 3: $"
+MSG4 DB "THE SMALLEST AMONG THE INPUT IS: $"
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    LEA DX,MSG1
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,1
+    INT 21H
+    MOV CL,AL ;MOVE THE INPUT TO CL AS 1ST INPUT
+    
+    MOV AH,2
+    INT 21H
+    MOV DL, 010 ;Print new line
+    INT 21H 
+              
+    MOV DL, 013 ;Clear the blank space
+    INT 21H
+    
+    
+    LEA DX,MSG2
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,1
+    INT 21H
+    MOV BL,AL ;MOVE THE INPUT TO BL AS 2ND INPUT
+    
+    MOV AH,2
+    INT 21H
+    MOV DL, 010 ;Print new line
+    INT 21H 
+              
+    MOV DL, 013 ;Clear the blank space
+    INT 21H
+    
+    LEA DX,MSG3
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,1
+    INT 21H
+    MOV CH,AL ;MOVE THE INPUT TO CH AS 3RD INPUT
+    
+    MOV AH,2
+    INT 21H
+    MOV DL, 010 ;Print new line
+    INT 21H 
+              
+    MOV DL, 013 ;Clear the blank space
+    INT 21H
+    
+    CMP CL,BL   ;COMPARE 1ST AND 2ND
+    JG L1       ;IF 1ST IS GREATER THEN GO TO L1 TO CMP 2ND
+    
+    CMP CL,CH   ;COMPARE 2ND AND 3RD
+    JG L2       ;IF 1ST IS GREATER THEN GO TO L2 TO CMP 3RD
+    
+    MOV AH,2
+    INT 21H
+    MOV DL,010 ;PRINT NEW LINE
+    INT 21H
+    
+    MOV DL,013  ;CLEAR BLANK SPACE
+    INT 21H
+    
+    LEA DX,MSG4 ;SHOW MSG OF RESULT        
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,2
+    INT 21H
+    MOV DL , CL   ;SHOW THE 1ST INPUT AS THE LARGEST
+    INT 21H
+    JMP TOEND     ;JUMP TO THE END SO EXECUTE ONLY ONCE
+    
+    L1:
+    CMP BL,CH
+    JG PRINT3RD
+    ;PRINT 2ND AS SMALLEST
+    MOV AH,2
+    INT 21H
+    MOV DL,010 ;PRINT NEW LINE
+    INT 21H
+    
+    MOV DL,013  ;CLEAR BLANK SPACE
+    INT 21H
+    
+    LEA DX,MSG4 ;SHOW MSG OF RESULT        
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,2
+    INT 21H
+    MOV DL , BL   ;SHOW THE 2ND INPUT AS THE SMALLEST
+    INT 21H
+    JMP TOEND     ;JUMP TO THE END SO EXECUTE ONLY ONCE
+    
+    PRINT3RD:
+    
+    MOV AH,2
+    INT 21H
+    MOV DL,010 ;PRINT NEW LINE
+    INT 21H
+    
+    MOV DL,013  ;CLEAR BLANK SPACE
+    INT 21H
+    
+    LEA DX,MSG4 ;SHOW MSG OF RESULT        
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,2
+    INT 21H
+    MOV DL , CH   ;SHOW THE 3RD INPUT AS THE SMALLEST
+    INT 21H
+    JMP TOEND     ;JUMP TO THE END SO EXECUTE ONLY ONCE
+    
+    L2:
+    CMP CH,BL
+    JG PRINT2ND
+    
+    ;PRINT 3RD AS SMALLEST
+    
+    MOV AH,2
+    INT 21H
+    MOV DL,010 ;PRINT NEW LINE
+    INT 21H
+    
+    MOV DL,013  ;CLEAR BLANK SPACE
+    INT 21H
+    
+    LEA DX,MSG4 ;SHOW MSG OF RESULT        
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,2
+    INT 21H
+    MOV DL , CH   ;SHOW THE 2ND INPUT AS THE SMALLEST
+    INT 21H
+    JMP TOEND     ;JUMP TO THE END SO EXECUTE ONLY ONCE
+    
+    PRINT2ND:
+    
+    MOV AH,2
+    INT 21H
+    MOV DL,010 ;PRINT NEW LINE
+    INT 21H
+    
+    MOV DL,013  ;CLEAR BLANK SPACE
+    INT 21H
+    
+    LEA DX,MSG4 ;SHOW MSG OF RESULT        
+    MOV AH,9
+    INT 21H
+    
+    MOV AH,2
+    INT 21H
+    MOV DL , BL   ;SHOW THE 2ND INPUT AS THE SMALLEST
+    INT 21H
+    JMP TOEND     ;JUMP TO THE END SO EXECUTE ONLY ONCE
+    
+    TOEND:
+    EXIT:
+   MOV AH , 4CH
+   INT 21H
+   MAIN ENDP
+   END MAIN
+    
+
+
+
+
